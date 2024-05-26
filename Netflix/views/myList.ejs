@@ -60,10 +60,14 @@
       <main>
         <div class="top">
             <div class="container">
-                <div class="content-row-mylist">
+                <div class="content-row-mylist column">
                     <div class="title">My List</div>
-                    <div class="container" id="movies-container">
-                           
+                    <div class="slider">
+                            <% movies.forEach(movie => { %>
+                                <div class="content" id="modalTrigger">
+                                    <img src="<%= movie.src %>" alt="<%= movie.id %>">
+                                </div>
+                            <% }) %>
                     </div>
                 </div>
             </div>
@@ -75,7 +79,7 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content position-relative">
             <div class="modal-header">
-              <video class="w-100" loop controls poster="https://www.themoviedb.org/t/p/original/fOy6SL5Zs2PFcNXwqEPIDPrLB1q.jpg">
+              <video class="w-100" autoplay loop controls poster="https://www.themoviedb.org/t/p/original/fOy6SL5Zs2PFcNXwqEPIDPrLB1q.jpg">
                 <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/1/10/Tears_of_Steel_in_4k_-_Official_Blender_Foundation_release.webm/Tears_of_Steel_in_4k_-_Official_Blender_Foundation_release.webm.2160p.vp9.webm" />
               </video>
               <button type="button" class="close" data-bs-dismiss="modal" onclick="stopVideo()">
@@ -172,63 +176,8 @@
         video.pause();
       }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/movies')
-                .then(response => response.json())
-                .then(data => {
-                    // Get the container where you want to display the movies
-                    const moviesContainer = document.getElementById('movies-container');
-
-                    // Iterate through each movie in the data
-                    data.forEach(movie => {
-                        const movieDiv = document.createElement('div');
-                        movieDiv.classList.add('content');
-
-                        const movieImage = document.createElement('img');
-                        movieImage.src = movie.src;
-                        movieImage.alt = `${movie.id} Image`;
-
-                        movieImage.addEventListener('click', () => {
-                            showModal(movieImage.getAttribute('src'));
-                        });
-
-
-                        movieDiv.appendChild(movieImage);
-
-                        moviesContainer.appendChild(movieDiv);
-                    });
-                })
-                .catch(error => console.error('Error fetching movies:', error));
-        });
-    </script>
-    <script>
-        function showModal() {
-        const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-        myModal.show();
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-        const video = document.querySelector('#exampleModal video');
-
-        // Function to start video playback
-        function playVideo() {
-            video.play();
-        }
-
-        // Function to pause video playback
-        function pauseVideo() {
-            video.pause();
-        }
-
-        // When the modal is shown, start video playback
-        myModal._element.addEventListener('shown.bs.modal', playVideo);
-
-        // When the modal is hidden, pause video playback
-        myModal._element.addEventListener('hidden.bs.modal', pauseVideo);
-    });
-    </script>
-    
+    <script src="script/modal.js"></script>
     <script src="script/homePage.js"></script>
+    <script src="script/myList.js"></script>
 </body>
 </html>

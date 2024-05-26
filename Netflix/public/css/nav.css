@@ -56,6 +56,18 @@ nav {
   margin-left: 2vw;
 }
 
+.nav-items a{
+  color: white;
+  display: flex;
+  height: 100%;
+  position: relative;
+  font-size: 15px;
+}
+
+.nav-items a:hover{
+  text-decoration: none;
+}
+
 .nav-icons {
   display: flex;
   align-items: center;

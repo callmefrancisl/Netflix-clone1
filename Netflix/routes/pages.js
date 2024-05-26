@@ -1,7 +1,9 @@
 const express = require("express");
 const loggedIn = require("../controllers/loggedIn");
 const logout = require("../controllers/logout");
+const addImage = require("../controllers/addImage");
 const router = express.Router();
+
 
 
 router.get("/", loggedIn, (req,res) =>{
@@ -40,8 +42,17 @@ router.get("/api/user", loggedIn, (req, res) =>{
         res.status(401).json({ error: "Unauthorized" });
     }
 });
+router.get("/myList", loggedIn, (req,res) =>{
+    if(req.user){
+        res.sendFile("myList.html", {root: "./public"}); 
+    }else{
+        res.render("index");
+    }
+})
 
 router.get("/logout", logout)
+
+router.post('/addImage', addImage)
 
 
 
